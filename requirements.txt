@@ -1,2 +1,4 @@
 firebase-admin==6.5.0
 pyTelegramBotAPI==4.24.0
+flask==3.0.3
+gunicorn==22.0.0
