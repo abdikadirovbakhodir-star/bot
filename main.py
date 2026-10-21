@@ -13,7 +13,7 @@ from flask import Flask, request
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8822534887:AAHHA7kcKkZ__biIjxLTQvZGQ7D-3OBv3gg")
 WEBAPP_URL = os.getenv("WEBAPP_URL", "https://summageacademy.github.io/tappystars/")
 LOCAL_IMAGE_PATH = "tappy.png"
-WEBHOOK_URL = os.getenv("https://bot-w8va.onrender.com")  # e.g., https://your-app-name.onrender.com
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # e.g., https://your-app-name.onrender.com
 
 # ⚠️ ADMIN TELEGRAM ACCOUNT IDs
 ADMIN_IDS = [1645648704, 6904293060]
