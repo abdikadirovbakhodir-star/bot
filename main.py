@@ -24,13 +24,23 @@ app = Flask(__name__)
 # ==================== FIREBASE SETUP ====================
 if not firebase_admin._apps:
     try:
-        cred = credentials.Certificate("serviceAccountKey.json")
+        # Check if full JSON credential string is passed in Environment Variables
+        firebase_json_env = os.getenv("FIREBASE_CREDENTIALS")
+        
+        if firebase_json_env:
+            cred_dict = json.loads(firebase_json_env)
+            cred = credentials.Certificate(cred_dict)
+        elif os.path.exists("serviceAccountKey.json"):
+            cred = credentials.Certificate("serviceAccountKey.json")
+        else:
+            raise FileNotFoundError("No Firebase credentials found in environment or local file.")
+
         firebase_admin.initialize_app(cred)
+        print("✅ Firebase initialized successfully!")
     except Exception as e:
         print(f"⚠️ Firebase initialization warning: {e}")
 
 db = firestore.client() if firebase_admin._apps else None
-
 # ==================== TRANSLATIONS & REMINDERS ====================
 TRANSLATIONS = {
     "en": {
