@@ -1,4 +1,5 @@
 import os
+import json
 import time
 import html
 import random
@@ -8,6 +9,7 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request
+
 
 # ==================== CONFIGURATION ====================
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8822534887:AAHHA7kcKkZ__biIjxLTQvZGQ7D-3OBv3gg")
