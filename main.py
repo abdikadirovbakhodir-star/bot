@@ -263,6 +263,7 @@ import traceback  # Make sure traceback is imported at the top of your file if n
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
+    print("📥 /start command successfully reached send_welcome()!", flush=True)
     try:
         lang = detect_lang(message.from_user)
         t = TRANSLATIONS[lang]
@@ -273,7 +274,7 @@ def send_welcome(message):
             try:
                 db.collection("users").document(user_id).set({"language_code": lang}, merge=True)
             except Exception as db_err:
-                print(f"⚠️ Firestore non-fatal error: {db_err}")
+                print(f"⚠️ Firestore non-fatal error: {db_err}", flush=True)
 
         text_parts = message.text.split()
         if len(text_parts) > 1 and text_parts[1].startswith("ref_"):
@@ -292,8 +293,10 @@ def send_welcome(message):
             bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
             
     except Exception as e:
-        print("❌ CRITICAL /START ERROR:")
-        traceback.print_exc()  # This will print the exact line number and error in your Render logs
+        print(f"❌ CRITICAL /START ERROR: {e}", flush=True)
+        import traceback
+        traceback.print_exc()
+        
 # ==================== FLASK WEBHOOK ROUTES ====================
 @app.route("/", methods=["GET"])
 def index():
