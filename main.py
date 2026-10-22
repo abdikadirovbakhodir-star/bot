@@ -259,6 +259,8 @@ def send_nft_competition(message):
     except Exception as e:
         print(f"❌ /nft error: {e}")
 
+import traceback  # Make sure traceback is imported at the top of your file if not already
+
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
     try:
@@ -270,8 +272,8 @@ def send_welcome(message):
         if db:
             try:
                 db.collection("users").document(user_id).set({"language_code": lang}, merge=True)
-            except Exception:
-                pass
+            except Exception as db_err:
+                print(f"⚠️ Firestore non-fatal error: {db_err}")
 
         text_parts = message.text.split()
         if len(text_parts) > 1 and text_parts[1].startswith("ref_"):
@@ -288,9 +290,10 @@ def send_welcome(message):
                 bot.send_photo(chat_id=message.chat.id, photo=photo, caption=welcome_text, reply_markup=markup)
         else:
             bot.send_message(chat_id=message.chat.id, text=welcome_text, reply_markup=markup)
+            
     except Exception as e:
-        print(f"❌ /start error: {e}")
-
+        print("❌ CRITICAL /START ERROR:")
+        traceback.print_exc()  # This will print the exact line number and error in your Render logs
 # ==================== FLASK WEBHOOK ROUTES ====================
 @app.route("/", methods=["GET"])
 def index():
