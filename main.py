@@ -12,7 +12,7 @@ from flask import Flask, request
 
 
 # ==================== CONFIGURATION ====================
-BOT_TOKEN = os.getenv("BOT_TOKEN", "8822534887:AAHHA7kcKkZ__biIjxLTQvZGQ7D-3OBv3gg")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8696482695:AAH1tuM_URQjoWCfLfZXBqze2lVQxAeC2iE")
 WEBAPP_URL = os.getenv("WEBAPP_URL", "https://summageacademy.github.io/tappystars/")
 LOCAL_IMAGE_PATH = "tappy.png"
 WEBHOOK_URL = "https://bot-w8va.onrender.com" # e.g., https://your-app-name.onrender.com
