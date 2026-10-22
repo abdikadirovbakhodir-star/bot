@@ -305,13 +305,18 @@ def webhook():
         return "OK", 200
     return "Forbidden", 403
 
-# ==================== SETUP & STARTUP ====================
-if __name__ == "__main__":
-    if WEBHOOK_URL:
+# ==================== WEBHOOK REGISTRATION ====================
+# Runs immediately when Gunicorn boots up the app on Render
+if WEBHOOK_URL:
+    try:
         bot.remove_webhook()
         time.sleep(0.5)
         bot.set_webhook(url=f"{WEBHOOK_URL}/{BOT_TOKEN}")
-        print(f"🌐 Webhook set to: {WEBHOOK_URL}/{BOT_TOKEN}")
-    
+        print(f"🌐 Webhook successfully registered at: {WEBHOOK_URL}/{BOT_TOKEN}")
+    except Exception as e:
+        print(f"⚠️ Webhook registration error: {e}")
+
+# ==================== SETUP & STARTUP ====================
+if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
